@@ -478,7 +478,12 @@ Error ProjectExportDialog::export_platform(const String& p_platform, const Strin
 	Error err = exporter->export_project(p_path,p_debug);
 	if (err!=OK) {
 		error->set_text("Error exporting project!");
-		error->popup_centered(Size2(300,70));;
+		error->popup_centered(Size2(300,70));
+		ERR_PRINT("Exporting failed!");
+		if (p_quit_after) {
+			OS::get_singleton()->set_exit_code(255);
+			get_tree()->quit();
+		}
 		return ERR_CANT_CREATE;
 	} else {
 		if (p_quit_after) {
